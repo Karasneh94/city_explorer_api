@@ -33,14 +33,29 @@ app.get('/location', handleLocation);
 
 app.get('/weather', handleWeather);
 
+function handleError(status, response) {
+
+    switch (status) {
+    case 500:
+        response.status(500).send('Sorry, something went wrong');
+        break;
+    default:
+        break;
+    }
+
+}
 
 function handleLocation(request, response) {
 
     const getLocation = require('./data/location.json');
     const city = request.query.city;
-    console.log(city);
-    let locationObj = new Location(city, getLocation[0].display_name, getLocation[0].lat, getLocation[0].lon);
-    response.send(locationObj);
+    if (!city) {
+        handleError(500, response);
+    } else {
+        let locationObj = new Location(city, getLocation[0].display_name, getLocation[0].lat, getLocation[0].lon);
+        response.send(locationObj);
+    }
+
 }
 
 function handleWeather(request, response) {
