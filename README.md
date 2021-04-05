@@ -1,24 +1,76 @@
 # City Explorer
 
 **Author**: Ahmed Karasneh
-**Version**: 1.0.0
+**Version**: 1.0.4
 
 ## Overview
 
 an API server, which will provide data for the City Explorer Application, allowing a user to search for a location, present a Map, as well as interesting information about the area, all using data from APIs that your server will fetch and manage.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+
+1. install node.js
+
+1. install node package manager (npm)
+
+1. install dependencies by running npm install
+
+1. create .env file and add port key with a value
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+
+Javascript is the language used with some of its propertis like core, express, dotenv and one of its framework called node.js
 
 ## Change Log
 
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
+----------------------------------Feature #1----------------------------------
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
--->
+Number and name of feature: Feature #1 - Repository Setup
+
+Estimate of time needed to complete: 10 Minutes
+
+Start time: 6:00 PM
+
+Finish time: 6:15 PM
+
+Actual time needed to complete: 15 Minutes
+
+----------------------------------Feature #2----------------------------------
+
+Number and name of feature: Feature #2 - Add Location
+
+Estimate of time needed to complete: 30 Minutes
+
+Start time: 6:15 PM
+
+Finish time: 6:50 PM
+
+Actual time needed to complete: 35 Minutes
+
+----------------------------------Feature #3----------------------------------
+
+Number and name of feature: Feature #3 - Add Weather
+
+Estimate of time needed to complete: 40 Minutes
+
+Start time: 6:50 PM
+
+Finish time: 7:30 PM
+
+Actual time needed to complete: 40 Minutes
+
+----------------------------------Feature #4----------------------------------
+
+Number and name of feature: Feature #3 - Handling Error
+
+Estimate of time needed to complete: 30 Minutes
+
+Start time: 7:30 PM
+
+Finish time: 8:00 PM
+
+Actual time needed to complete: 30 Minutes
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+special thanks to waleed farraj for helping me solving an error
