@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 'use strict';
 
-function Location (search_query, formatted_query, latitude, longitude) {
+let weatherArr = [];
+
+function Location(search_query, formatted_query, latitude, longitude) {
 
     this.search_query = search_query;
     this.formatted_query = formatted_query;
@@ -9,7 +11,11 @@ function Location (search_query, formatted_query, latitude, longitude) {
     this.longitude = longitude;
 }
 
-
+function Weather(forecast, time) {
+    this.forecast = forecast;
+    this.time = time;
+    weatherArr.push(this);
+}
 
 
 
@@ -17,7 +23,7 @@ function Location (search_query, formatted_query, latitude, longitude) {
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { request } = require('node:http');
+
 
 const PORT = process.env.PORT;
 const app = express();
@@ -37,12 +43,21 @@ function handleLocation(request, response) {
     response.send(locationObj);
 }
 
-function handleWeather() {
+function handleWeather(request, response) {
 
+    weatherArr === true ? weatherArr = [] : console.log('first weather array');
 
+    const getWeather = require('./data/weather.json');
+    getWeather.data.forEach(element => {
+
+        new Weather(element.weather.description, element.valid_date);
+
+    });
+
+    response.send(weatherArr);
 }
 
-app.listen(PORT, () => console.log(`App is running on Server on port ${PORT}`));
+app.listen(PORT, () => { console.log(`App is running on Server on port ${PORT}`); });
 
 
 
