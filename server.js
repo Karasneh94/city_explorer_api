@@ -45,7 +45,7 @@ function handleLocation(request, response) {
 
 function handleWeather(request, response) {
 
-    weatherArr === true ? weatherArr = [] : console.log('first weather array');
+    weatherArr.length !== 0 ? weatherArr = [] : console.log('first weather array');
 
     const getWeather = require('./data/weather.json');
     getWeather.data.forEach(element => {
