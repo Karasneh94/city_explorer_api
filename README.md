@@ -1,7 +1,7 @@
 # City Explorer
 
 **Author**: Ahmed Karasneh
-**Version**: 1.0.4
+**Version**: 1.1.8
 
 ## Overview
 
@@ -19,13 +19,13 @@ an API server, which will provide data for the City Explorer Application, allowi
 
 ## Architecture
 
-Javascript is the language used with some of its propertis like core, express, dotenv and one of its framework called node.js
+Javascript is the language used with some of its propertis like core, express, superagent, dotenv and one of its framework called node.js
 
 ## Change Log
 
 ----------------------------------Feature #1----------------------------------
 
-Number and name of feature: Feature #1 - Repository Setup
+Number and name of feature: Feature #1 - Data Formatting
 
 Estimate of time needed to complete: 10 Minutes
 
@@ -37,7 +37,7 @@ Actual time needed to complete: 15 Minutes
 
 ----------------------------------Feature #2----------------------------------
 
-Number and name of feature: Feature #2 - Add Location
+Number and name of feature: Feature #2 - Add Location by latitude and longitude
 
 Estimate of time needed to complete: 30 Minutes
 
@@ -61,7 +61,7 @@ Actual time needed to complete: 40 Minutes
 
 ----------------------------------Feature #4----------------------------------
 
-Number and name of feature: Feature #3 - Handling Error
+Number and name of feature: Feature #3 - add parks api
 
 Estimate of time needed to complete: 30 Minutes
 
