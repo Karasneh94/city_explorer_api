@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 'use strict';
 
@@ -23,6 +24,7 @@ function Weather(forecast, time) {
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const superagent = require('superagent');
 
 
 const PORT = process.env.PORT;
@@ -36,11 +38,11 @@ app.get('/weather', handleWeather);
 function handleError(status, response) {
 
     switch (status) {
-    case 500:
-        response.status(500).send('Sorry, something went wrong');
-        break;
-    default:
-        break;
+        case 500:
+            response.status(500).send('Sorry, something went wrong');
+            break;
+        default:
+            break;
     }
 
 }
@@ -58,18 +60,46 @@ function handleLocation(request, response) {
 
 }
 
+
+
+
 function handleWeather(request, response) {
+
+    // weatherArr.length !== 0 ? weatherArr = [] : console.log('first weather array');
+
+    // const getWeather = require('./data/weather.json');
+    // getWeather.data.forEach(element => {
+
+    //     new Weather(element.weather.description, element.valid_date);
+
+    // });
+
+    // response.send(weatherArr);
+
 
     weatherArr.length !== 0 ? weatherArr = [] : console.log('first weather array');
 
-    const getWeather = require('./data/weather.json');
-    getWeather.data.forEach(element => {
+    let key = process.env.WEATHER_API_KEY;
+    const city = request.query.city;
+    //const city = 'amman';
 
-        new Weather(element.weather.description, element.valid_date);
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}&days=8`;
+
+    superagent.get(url).then(res => {
+
+        res.body.data.map(element => {
+
+            new Weather(element.weather.description, element.valid_date);
+
+        });
 
     });
 
+
     response.send(weatherArr);
+
+
+
 }
 
 app.listen(PORT, () => { console.log(`App is running on Server on port ${PORT}`); });
