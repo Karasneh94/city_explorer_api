@@ -3,8 +3,10 @@
 'use strict';
 
 let weatherArr = [];
-let locationObj ;
+let locationObj;
 let parkArr = [];
+let checkLocation = false;
+
 
 function Location(search_query, formatted_query, latitude, longitude) {
 
@@ -34,11 +36,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
+const pg = require('pg');
 
 
 const PORT = process.env.PORT;
 const app = express();
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.log('error with PG, probably the DB URL'));
 app.use(cors());
+
 
 app.get('/location', handleLocation);
 
@@ -62,24 +68,42 @@ function handleLocation(request, response) {
 
     const key = process.env.GEOCODE_API_KEY;
     const city = request.query.city;
+    const url = `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json&limit=1`;
 
-    
+    locationDataCheck(city).then(result => {
+        if (result.rows.length > 0) {
 
+            console.log('city exist');
+            locationObj = new Location(city, result.rows[0].formatted_query, result.rows[0].latitude, result.rows[0].longitude);
+            response.send(locationObj);
 
-const url = `https://eu1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json&limit=1`;
+        } else {
 
+            console.log('city NOT exist, will retrieve from API');
+            superagent.get(url).then(res => {
+                res.body.map(element => {
+                    locationObj = new Location(city, element.display_name, element.lat, element.lon);
+                });
 
-superagent.get(url).then(res => {
-
-    res.body.map(element => {
-
-        locationObj = new Location(city, element.display_name, element.lat, element.lon);
-
+                let newSQL = 'INSERT INTO location (search_query , formatted_query , latitude ,longitude) VALUES($1, $2, $3, $4)';
+                client.query(newSQL, [city, locationObj.formatted_query, locationObj.latitude, locationObj.longitude]).then(() => {
+                    response.send(locationObj);
+                });
+            });
+        }
     });
-    response.send(locationObj);
-});
 
 }
+
+
+function locationDataCheck(city) {
+    let SQL = 'SELECT * FROM location WHERE search_query=$1';
+    return client.query(SQL, [city]);
+
+}
+
+
+
 
 
 
@@ -120,13 +144,14 @@ function handleParks(request, response) {
 
         });
         response.send(parkArr);
-    }).catch(err => {console.log('Something went wrong in parks api');});
+    }).catch(err => { console.log('Something went wrong in parks api'); });
 
 }
 
 
+client.connect().then(() => {
+    console.log('connected');
+    app.listen(PORT, () => { console.log(`App is running on Server on port ${PORT}`); });
 
-app.listen(PORT, () => { console.log(`App is running on Server on port ${PORT}`); });
-
-
+});
 
