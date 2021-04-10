@@ -1,7 +1,7 @@
 # City Explorer
 
 **Author**: Ahmed Karasneh
-**Version**: 1.1.8
+**Version**: 1.4.8
 
 ## Overview
 
